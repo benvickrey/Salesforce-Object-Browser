@@ -23,7 +23,18 @@ export function activate(context: vscode.ExtensionContext) {
 	//});
 
 	//context.subscriptions.push(disposable);
-	vscode.window.registerTreeDataProvider('objects', new objProvider());
+	
+	if (vscode.workspace.getConfiguration('salesforce-object-browser').get('path') == "")
+	{
+		vscode.window.showInformationMessage('Please add the path of your your objects folder to settings.');
+	}
+	else
+	{
+		var p : any = vscode.workspace.getConfiguration('salesforce-object-browser').get('path');
+		const OP = new objProvider(p);
+		vscode.window.registerTreeDataProvider('objects', OP);
+		vscode.commands.registerCommand('Extension.refresh', () =>  OP.refresh());
+	}
 }
 
 export class objProvider implements vscode.TreeDataProvider<Obj> {
@@ -31,7 +42,7 @@ export class objProvider implements vscode.TreeDataProvider<Obj> {
 	private _onDidChangeTreeData: vscode.EventEmitter<Obj | undefined> = new vscode.EventEmitter<Obj | undefined>();
 	readonly onDidChangeTreeData: vscode.Event<Obj | undefined> = this._onDidChangeTreeData.event;
 
-	constructor() {
+	constructor(private workspaceRoot: string) {
 	}
 
 	refresh(): void {
@@ -44,10 +55,24 @@ export class objProvider implements vscode.TreeDataProvider<Obj> {
 
 	getChildren(element?: Obj): Thenable<Obj[]> {
 		
-	
-		return Promise.resolve( [new Obj('Test',1), new Obj('Test2',0)]);
+		var names : Obj[] = [];
+		if (element)
+		{
+			let fieldnames : string[] = fs.readdirSync(this.workspaceRoot + "/" + element.label + "/fields");
+			fieldnames.forEach(e => {
+				var newString = e.substring(0, e.length - 15)
+				names.push(new Obj(newString,0));
+			})
+		}
+		else
+		{
+			var objects : string[] = fs.readdirSync(this.workspaceRoot);
+			objects.forEach(e => {
+				names.push(new Obj(e,1));
+			});
+		}
 		
-		
+		return Promise.resolve(names);
 	}
 }
 

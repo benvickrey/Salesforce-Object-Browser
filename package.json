@@ -17,7 +17,7 @@
 		"commands": [
 			
 			{
-				"command": "Extension.helloWorld",
+				"command": "Extension.refresh",
       			"title": "Refresh",
       			"icon": {
         		"light": "resources/light/refresh.svg",
@@ -45,12 +45,23 @@
 		  "menus": {
 			"view/title": [
 			  {
-				"command": "Extension.helloWorld",
+				"command": "Extension.refresh",
 				"when": "view == objects",
 				"group": "navigation"
 			  }
 			]
-		}
+		},
+		"configuration": {
+            "type": "object",
+            "title": "Salesforce Object Browser Settings",
+            "properties": {
+                "salesforce-object-browser.path": {
+                    "type": "string",
+                    "default": true,
+                    "description": "The path to your \"Objects\" directory."
+                }
+            }
+        }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
