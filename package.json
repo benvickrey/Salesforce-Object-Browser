@@ -1,6 +1,7 @@
 {
 	"name": "salesforce-object-browser",
 	"displayName": "SalesForce Object Browser",
+	"publisher": "hffzmzohf3os27sxaaacdr4aw7roqerqo4ohnjo5rv5wq6r5qagay",
 	"description": "",
 	"version": "0.0.1",
 	"engines": {
@@ -15,53 +16,52 @@
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
-			
 			{
 				"command": "Extension.refresh",
-      			"title": "Refresh",
-      			"icon": {
-        		"light": "resources/light/refresh.svg",
-        		"dark": "resources/dark/refresh.svg"
-				  }
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
 			}
 		],
 		"viewsContainers": {
 			"activitybar": [
-			  {
-				"id": "object-explorer",
-				"title": "Object Explorer",
-				"icon": "media/dep.svg"
-			  }
+				{
+					"id": "object-explorer",
+					"title": "Object Explorer",
+					"icon": "media/dep.svg"
+				}
 			]
-		  },
+		},
 		"views": {
 			"object-explorer": [
-			  {
-				"id": "objects",
-				"name": "Objects"
-			  }
+				{
+					"id": "objects",
+					"name": "Objects"
+				}
 			]
-		  },
-		  "menus": {
+		},
+		"menus": {
 			"view/title": [
-			  {
-				"command": "Extension.refresh",
-				"when": "view == objects",
-				"group": "navigation"
-			  }
+				{
+					"command": "Extension.refresh",
+					"when": "view == objects",
+					"group": "navigation"
+				}
 			]
 		},
 		"configuration": {
-            "type": "object",
-            "title": "Salesforce Object Browser Settings",
-            "properties": {
-                "salesforce-object-browser.path": {
-                    "type": "string",
-                    "default": true,
-                    "description": "The path to your \"Objects\" directory."
-                }
-            }
-        }
+			"type": "object",
+			"title": "Salesforce Object Browser Settings",
+			"properties": {
+				"salesforce-object-browser.path": {
+					"type": "string",
+					"default": true,
+					"description": "The path to your \"Objects\" directory."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -76,5 +76,8 @@
 		"tslint": "^5.12.1",
 		"@types/node": "^10.12.21",
 		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"vsce": "^1.62.0"
 	}
 }
