@@ -57,7 +57,7 @@
 			"properties": {
 				"salesforce-object-browser.path": {
 					"type": "string",
-					"default": true,
+					"default": "",
 					"description": "The path to your \"Objects\" directory."
 				}
 			}
